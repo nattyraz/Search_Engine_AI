@@ -6,9 +6,14 @@ import pinecone
 import os
 
 PINECONE_API_KEY = st.secrets["PINECONE_API_KEY"]
+PINECONE_ENV = st.secrets["PINECONE_ENVIRONMENT"]
 
 # Initialisation de Pinecone juste après avoir récupéré la clé API
-pinecone.init(api_key=PINECONE_API_KEY)
+pinecone.init(
+    api_key=PINECONE_API_KEY,
+    environment=PINECONE_ENV
+)
+
 
 INDEX_NAME = "semantic-search-index"
 if INDEX_NAME not in pinecone.list_indexes():
