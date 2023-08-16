@@ -5,11 +5,15 @@ import torch
 import pinecone
 import os
 
-PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
+PINECONE_API_KEY = st.secrets["PINECONE_API_KEY"]
+
+# Initialisation de Pinecone juste après avoir récupéré la clé API
+pinecone.init(api_key=PINECONE_API_KEY)
 
 INDEX_NAME = "semantic-search-index"
 if INDEX_NAME not in pinecone.list_indexes():
-    pinecone.create_index(index_name=INDEX_NAME, dimension=768)  # Supposant 768 dimensions pour les embeddings BERT
+    pinecone.create_index(index_name=INDEX_NAME, dimension=768)
+
 
 tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-cased')
 model = BertModel.from_pretrained('bert-base-multilingual-cased')
