@@ -3,9 +3,13 @@ import pandas as pd
 from transformers import BertTokenizer, BertModel
 import torch
 import pinecone
+import os
+from dotenv import load_dotenv
 
-# Initialisation de Pinecone
-pinecone.init(api_key="VOTRE_API_KEY")
+load_dotenv()
+
+PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
+
 INDEX_NAME = "semantic-search-index"
 if INDEX_NAME not in pinecone.list_indexes():
     pinecone.create_index(index_name=INDEX_NAME, dimension=768)  # Supposant 768 dimensions pour les embeddings BERT
